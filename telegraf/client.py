@@ -1,6 +1,9 @@
-from telegraf.protocol import Line
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import logging
 import socket
 
+from telegraf.protocol import Line
 
 class TelegrafClient(object):
 
@@ -36,6 +39,6 @@ class TelegrafClient(object):
         """
         try:
             self.socket.sendto(data.encode('ascii') + b'\n', (self.host, self.port))
-        except (socket.error, RuntimeError):
+        except (socket.error, RuntimeError) as e:
             # Socket errors should fail silently so they don't affect anything else
-            pass
+            logging.exception('error occurred when send data')
